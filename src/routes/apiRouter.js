@@ -1,3 +1,5 @@
+"use strict";
+
 const apiRouter = require('express').Router();
 const notesRoute = require('./notes');
 

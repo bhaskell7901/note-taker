@@ -1,3 +1,5 @@
+"use strict";
+
 const notes = require('express').Router();
 const { readFromFile, readAndAppend, writeToFile } = require('../utilities/readWriteUtils');
 const cryptoId = require('../utilities/cryptoId');

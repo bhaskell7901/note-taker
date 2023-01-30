@@ -4,14 +4,14 @@ const notes = require('express').Router();
 const { readFromFile, readAndAppend, writeToFile } = require('../utilities/readWriteUtils');
 const cryptoId = require('../utilities/cryptoId');
 
-
+// GET
 notes.get('/', (req, res) => {
   console.info(`${req.method} for API --> notes`);
 
   readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
-
+// POST
 notes.post('/', (req, res) => {
   console.info(`${req.method} for API --> notes`);
 
@@ -38,6 +38,7 @@ notes.post('/', (req, res) => {
   }
 });
 
+// DELETE
 notes.delete('/:id', (req, res) => {
     console.log(`${req.method} for API --> notes: ${req.params.id}`);
 

@@ -44,7 +44,7 @@ notes.delete('/:id', (req, res) => {
     readFromFile('./db/db.json').then((data) => {
         const notes = JSON.parse(data);
 
-        var index = notes.map( (note) => {return note.id}).indexOf(req.params.id);
+        var index = notes.map((note) => {return note.id}).indexOf(req.params.id);
         
         if( index === -1){
             res.status(404).json("Id not found");

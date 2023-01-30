@@ -31,10 +31,10 @@ notes.post('/', (req, res) => {
       status: 'success',
       body: newNote,
     };
-
     res.json(response);
+  
   } else {
-    res.json('Error in posting note');
+    res.json('Error posting note');
   }
 });
 
@@ -51,6 +51,12 @@ notes.delete('/:id', (req, res) => {
         } else {
             notes.splice(index, 1);
             writeToFile('./db/db.json', notes);
+
+            const response = {
+              status: 'success',
+              body: `Deleted id: ${req.params.id}`,
+            };
+            res.json(response);
         }
 
     });

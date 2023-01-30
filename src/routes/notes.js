@@ -1,43 +1,57 @@
 const notes = require('express').Router();
-const { readFromFile, readAndAppend } = require('../utilities/');
-const uuid = require('../helpers/uuid');
+const { readFromFile, readAndAppend, writeToFile } = require('../utilities/readWriteUtils');
+const cryptoId = require('../utilities/cryptoId');
 
-// GET Route for retrieving all the feedback
-fb.get('/', (req, res) => {
-  console.info(`${req.method} request received for feedback`);
 
-  readFromFile('./db/feedback.json').then((data) => res.json(JSON.parse(data)));
+notes.get('/', (req, res) => {
+  console.info(`${req.method} for API --> notes`);
+
+  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
-// POST Route for submitting feedback
-fb.post('/', (req, res) => {
-  // Log that a POST request was received
-  console.info(`${req.method} request received to submit feedback`);
 
-  // Destructuring assignment for the items in req.body
-  const { email, feedbackType, feedback } = req.body;
+notes.post('/', (req, res) => {
+  console.info(`${req.method} for API --> notes`);
 
-  // If all the required properties are present
-  if (email && feedbackType && feedback) {
-    // Variable for the object we will save
-    const newFeedback = {
-      email,
-      feedbackType,
-      feedback,
-      feedback_id: uuid(),
+  const { title, text } = req.body;
+
+  if (title && text ) {
+
+    const newNote = {
+      title,
+      text,
+      id: cryptoId()
     };
 
-    readAndAppend(newFeedback, './db/feedback.json');
+    readAndAppend(newNote, './db/db.json');
 
     const response = {
       status: 'success',
-      body: newFeedback,
+      body: newNote,
     };
 
     res.json(response);
   } else {
-    res.json('Error in posting feedback');
+    res.json('Error in posting note');
   }
 });
 
-module.exports = fb;
+notes.delete('/:id', (req, res) => {
+    console.log(`${req.method} for API --> notes: ${req.params.id}`);
+
+    readFromFile('./db/db.json').then((data) => {
+        const notes = JSON.parse(data);
+
+        var index = notes.map( (note) => {return note.id}).indexOf(req.params.id);
+        
+        if( index === -1){
+            res.status(404).json("Id not found");
+        } else {
+            notes.splice(index, 1);
+            writeToFile('./db/db.json', notes);
+        }
+
+    });
+});
+
+module.exports = notes;

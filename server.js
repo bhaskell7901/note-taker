@@ -22,5 +22,7 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html
 // Notes page
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, '/public/notes.html')));
 
+// Redirect all to home page
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

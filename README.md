@@ -1,6 +1,6 @@
 # Note Take Web App
 
-Welcome to the Note Taker app!  An app that let's you add notes online.  Check it out on the deployed site here[site](site).
+Welcome to the Note Taker app!  An app that let's you add notes online.  Check it out on the deployed site here [Note Taker](https://fathomless-sands-02690.herokuapp.com/).
 
 
 ## Table of Contents
